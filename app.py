@@ -28,6 +28,10 @@ uploaded_file = st.file_uploader("Cargar archivo TXT", type="txt")
 
 if uploaded_file is not None:
     corrected_content = process_file(uploaded_file)
+    
+    # Displaying a few corrected lines for verification
+    st.text_area("Contenido corregido", corrected_content[:1000])
+    
     st.download_button(
         label="Descargar archivo corregido",
         data=corrected_content,
