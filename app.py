@@ -1,16 +1,15 @@
-import re
 import streamlit as st
+import re
 
 def correct_line(line):
     if '0"0"0"' in line:
         parts = line.split('0"0"0"')
         if len(parts) > 1:
             second_part = parts[1]
-            match = re.search(r'(\d+\.\d+)"0"\+\1', second_part)
-            if match:
-                corrected_second_part = second_part.replace(match.group(), '', 1)
-                corrected_line = parts[0] + '0"0"0"' + corrected_second_part
-                return corrected_line
+            # Remove everything up to and including the fourth quote
+            corrected_second_part = re.sub(r'^.*?"', '', second_part, count=4)
+            corrected_line = parts[0] + '0"0"0"' + corrected_second_part
+            return corrected_line
     return line
 
 def process_file(uploaded_file):
