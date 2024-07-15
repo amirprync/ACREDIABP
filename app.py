@@ -8,6 +8,9 @@ def modificar_linea(linea):
     # Quitar 0"0 y reemplazarlo por + después de 8000""
     linea = re.sub(r'8000""0"0"', '8000"+"', linea)
     
+    # Reemplazar 0"+ por 0"0"0
+    linea = re.sub(r'0"\+"', '0"0"0', linea)
+    
     return linea
 
 def procesar_archivo(contenido):
