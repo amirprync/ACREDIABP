@@ -4,10 +4,10 @@ from io import StringIO
 
 # Función para modificar los registros
 def modify_record(record):
-    # Primer cambio: añadir espacio y comilla
+    # Aplicar el espacio y agregar la comilla entre "1" y "8000"
     record = re.sub(r'("1")("8000")', r'\1 "\2', record)
-    # Segundo cambio: eliminar "0" "0"
-    record = re.sub(r'("8000")"0" "0"', r'\1', record)
+    # Eliminar el "0" "0" después de "8000"
+    record = re.sub(r'("8000")"0"0"', r'\1', record)
     return record
 
 # Configuración de la página
