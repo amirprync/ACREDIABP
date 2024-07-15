@@ -6,7 +6,7 @@ def modificar_linea(linea):
     linea = re.sub(r'("1")(\d+)', r'\1 "\2"', linea)
     
     # Quitar 0"0 y reemplazarlo por + después de 8000""
-    linea = re.sub(r'8000""0"0"', '8000"+', linea)
+    linea = re.sub(r'8000""0"0"', '8000"+"', linea)
     
     return linea
 
