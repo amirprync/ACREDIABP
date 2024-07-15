@@ -1,4 +1,4 @@
-mport streamlit as st
+import streamlit as st
 import re
 def modificar_linea(linea):
     # Aplicar espacio y comillas entre "1" y "8000"
