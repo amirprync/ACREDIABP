@@ -1,46 +1,44 @@
 import streamlit as st
+import pandas as pd
 import re
+from io import StringIO
 
-def correct_line(line):
-    # Remove 0"0" after "8000"
-    line = re.sub(r'("8000)"0"0"', r'\1', line)
-    
-    # Remove everything up to and including the fourth quote after "0"0"0"
-    if '0"0"0"' in line:
-        parts = line.split('0"0"0"')
-        if len(parts) > 1:
-            first_part = parts[0]
-            second_part = parts[1]
-            # Find the position of the fourth quote after "0"0"0"
-            quote_indices = [m.start() for m in re.finditer('"', second_part)]
-            if len(quote_indices) >= 4:
-                corrected_second_part = second_part[quote_indices[3] + 1:]
-                corrected_line = first_part + '0"0"0"' + corrected_second_part
-                return corrected_line
-    return line
+# Función para modificar los registros
+def modify_record(record):
+    # Primer cambio
+    record = re.sub(r'("1")("8000")', r'\1 "\2', record)
+    # Segundo cambio
+    record = re.sub(r'("8000")("0" "0")', r'\1', record)
+    return record
 
-def process_file(uploaded_file):
-    lines = uploaded_file.getvalue().decode("utf-8").splitlines()
-    corrected_lines = []
-
-    for line in lines:
-        corrected_lines.append(correct_line(line))
-
-    return "\n".join(corrected_lines)
-
-st.title("Corrección de Archivo de Texto")
-
-uploaded_file = st.file_uploader("Cargar archivo TXT", type="txt")
+# Cargar archivo
+uploaded_file = st.file_uploader("Sube el archivo CSV", type=["csv", "txt"])
 
 if uploaded_file is not None:
-    corrected_content = process_file(uploaded_file)
+    # Leer archivo
+    string_data = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    data = string_data.read().splitlines()
     
-    # Displaying a few corrected lines for verification
-    st.text_area("Contenido corregido", corrected_content[:1000])
+    # Modificar cada registro
+    modified_data = [modify_record(record) for record in data]
     
+    # Convertir a un solo string
+    result = "\n".join(modified_data)
+    
+    # Mostrar el resultado
+    st.text_area("Archivo modificado", result, height=300)
+    
+    # Descargar el archivo modificado
     st.download_button(
-        label="Descargar archivo corregido",
-        data=corrected_content,
-        file_name="archivo_corregido.txt",
-        mime="text/plain"
+        label="Descargar archivo modificado",
+        data=result,
+        file_name="archivo_modificado.csv",
+        mime="text/csv"
     )
+
+# Instrucciones para el usuario
+st.write("""
+    1. Sube el archivo CSV o TXT con los registros.
+    2. El archivo será modificado automáticamente.
+    3. Podrás descargar el archivo modificado.
+""")
