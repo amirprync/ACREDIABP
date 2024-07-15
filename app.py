@@ -8,10 +8,10 @@ def modificar_linea(linea):
     # Quitar 0"0 y reemplazarlo por + después de 8000""
     linea = re.sub(r'8000""0"0"', '8000"+"', linea)
     
-    # Borrar todo lo que hay entre la 11ª y la 13ª comilla doble
+    # Borrar todo lo que hay entre la 11ª y la 16ª comilla doble y agregar 0"0"0
     partes = linea.split('"')
-    if len(partes) >= 14:
-        partes[11:13] = ['']
+    if len(partes) >= 17:
+        partes[11:16] = ['0', '0', '0']
     linea = '"'.join(partes)
     
     return linea
