@@ -5,12 +5,13 @@ def correct_line(line):
     if '0"0"0"' in line:
         parts = line.split('0"0"0"')
         if len(parts) > 1:
+            first_part = parts[0]
             second_part = parts[1]
-            # Find the position of the fourth quote after the first part
+            # Remove everything up to and including the fourth quote after "0"0"0"
             quote_indices = [m.start() for m in re.finditer('"', second_part)]
             if len(quote_indices) >= 4:
-                corrected_second_part = second_part[quote_indices[3] + 1:]  # Start after the fourth quote
-                corrected_line = parts[0] + '0"0"0"' + corrected_second_part
+                corrected_second_part = second_part[quote_indices[3] + 1:]
+                corrected_line = first_part + '0"0"0"' + corrected_second_part
                 return corrected_line
     return line
 
