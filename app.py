@@ -12,7 +12,7 @@ def modificar_linea(linea):
 
 def procesar_archivo(contenido):
     lineas = contenido.split('\n')
-    lineas_modificadas = [modificar_linea(linea) for linea in lineas if line.strip()]
+    lineas_modificadas = [modificar_linea(linea) for linea in lineas if linea.strip()]
     return '\n'.join(lineas_modificadas)
 
 st.title('Modificador de Registros')
