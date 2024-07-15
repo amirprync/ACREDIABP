@@ -1,18 +1,21 @@
 import streamlit as st
-import pandas as pd
 import re
 from io import StringIO
 
 # Función para modificar los registros
 def modify_record(record):
-    # Primer cambio
+    # Primer cambio: añadir espacio y comilla
     record = re.sub(r'("1")("8000")', r'\1 "\2', record)
-    # Segundo cambio
-    record = re.sub(r'("8000")("0" "0")', r'\1', record)
+    # Segundo cambio: eliminar "0" "0"
+    record = re.sub(r'("8000")"0" "0"', r'\1', record)
     return record
 
+# Configuración de la página
+st.title("Modificación de Registros")
+st.write("Sube un archivo TXT, se modificarán los registros según las especificaciones, y podrás descargar el archivo modificado.")
+
 # Cargar archivo
-uploaded_file = st.file_uploader("Sube el archivo CSV", type=["csv", "txt"])
+uploaded_file = st.file_uploader("Sube el archivo TXT", type=["txt"])
 
 if uploaded_file is not None:
     # Leer archivo
@@ -32,13 +35,6 @@ if uploaded_file is not None:
     st.download_button(
         label="Descargar archivo modificado",
         data=result,
-        file_name="archivo_modificado.csv",
-        mime="text/csv"
+        file_name="archivo_modificado.txt",
+        mime="text/plain"
     )
-
-# Instrucciones para el usuario
-st.write("""
-    1. Sube el archivo CSV o TXT con los registros.
-    2. El archivo será modificado automáticamente.
-    3. Podrás descargar el archivo modificado.
-""")
