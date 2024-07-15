@@ -5,8 +5,8 @@ def modificar_linea(linea):
     # Aplicar espacio y comillas entre "1" y "8000"
     linea = re.sub(r'("1")(\d+)', r'\1 "\2"', linea)
     
-    # Quitar 0"0 y agregar un + después de 8000"
-    linea = re.sub(r'8000"0"0"', '8000"+', linea)
+    # Quitar 0"0 y reemplazarlo por + después de 8000""
+    linea = re.sub(r'8000""0"0"', '8000""+', linea)
     
     return linea
 
