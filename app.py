@@ -2,11 +2,11 @@ import streamlit as st
 import re
 
 def modificar_linea(linea):
-    # Aplicar espacio y comillas entre "1" y "8000"
+    # Aplicar espacio y comillas entre "1" y "7000"
     linea = re.sub(r'("1")(\d+)', r'\1 "\2"', linea)
     
-    # Quitar 0"0 y reemplazarlo por + después de 8000""
-    linea = re.sub(r'8000""0"0"', '8000"+"', linea)
+    # Quitar 0"0 y reemplazarlo por + después de 7000""
+    linea = re.sub(r'7000""0"0"', '7000"+"', linea)
     
     # Borrar todo lo que hay entre la 11ª y la 16ª comilla doble y agregar 0"0"0
     partes = linea.split('"')
