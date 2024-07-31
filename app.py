@@ -21,9 +21,9 @@ def procesar_archivo(contenido):
     lineas_modificadas = [modificar_linea(linea) for linea in lineas if linea.strip()]
     return '\n'.join(lineas_modificadas)
 
-st.title('Modificador de Registros')
+st.title('Modificador de ACREDIABP a ACREDIA')
 
-archivo_subido = st.file_uploader("Sube tu archivo de texto", type="txt")
+archivo_subido = st.file_uploader("Subir archivo de texto del ACREDIABP", type="txt")
 
 if archivo_subido is not None:
     contenido = archivo_subido.getvalue().decode("utf-8")
